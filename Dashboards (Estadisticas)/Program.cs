@@ -1,14 +1,16 @@
-var builder = WebApplication.CreateBuilder(args);
+using Dashboards.Services; // <--- Asegúrate de tener este using
 
-// Add services to the container.
+var builder = WebApplication.CreateBuilder(args); // 1. PRIMERO SE CREA EL BUILDER
+
+// 2. LUEGO SE AGREGAN LOS SERVICIOS (Aquí va la línea que daba error)
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<DashboardService>(); // <--- Esta línea debe ir DESPUÉS de crear el builder
 
-var app = builder.Build();
+var app = builder.Build(); // 3. FINALMENTE SE CONSTRUYE LA APP
 
-// Configure the HTTP request pipeline.
+// ... El resto de tu configuración de pipeline ...
 if (!app.Environment.IsDevelopment())
 {
-    // Cambiamos "/Error" (que busca una Razor Page) por una ruta MVC genérica si llegas a crear un HomeController
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
@@ -20,12 +22,6 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-// --- ZONA DE CAMBIOS IMPORTANTES ---
-
-// 1. Eliminamos app.MapRazorPages(); porque ya no usamos esa metodología.
-
-// 2. Agregamos el ruteo MVC.
-// Esto le dice a la app: "Al iniciar, busca el DashboardController y muestra la vista Index".
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Dashboard}/{action=Index}/{id?}");

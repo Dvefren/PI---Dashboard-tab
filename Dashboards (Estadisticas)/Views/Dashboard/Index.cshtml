@@ -1,41 +1,192 @@
-﻿@{
-    ViewData["Title"] = "Dashboard Principal";
+﻿@model Dashboards.Models.ViewModels.DashboardVM
+
+@{
+    ViewData["Title"] = "Tablero Principal";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Panel de Control UTT</h1>
-    <p>Bienvenido al Sistema de Gestión Integral - Módulo de Estadísticas</p>
+<div class="container-fluid">
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4 mt-3">
+        <h1 class="h3 mb-0 text-gray-800">Vista General: Rectoría</h1>
+        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+            <i class="bi bi-download"></i> Descargar Reporte
+        </a>
+    </div>
+
+    <div class="row">
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2 border-primary border-3 border-top-0 border-end-0 border-bottom-0">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Matrícula Total (Activos)
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.TotalAlumnos</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="bi bi-people-fill h2 text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2 border-success border-3 border-top-0 border-end-0 border-bottom-0">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Promedio Universidad
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.PromedioGeneral</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="bi bi-mortarboard-fill h2 text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-danger shadow h-100 py-2 border-danger border-3 border-top-0 border-end-0 border-bottom-0">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                                Alumnos en Riesgo (Bajas)
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.AlumnosEnRiesgo</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="bi bi-exclamation-triangle-fill h2 text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2 border-warning border-3 border-top-0 border-end-0 border-bottom-0">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                Trámites Pendientes
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.TramitesPendientes</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="bi bi-file-earmark-text-fill h2 text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-xl-8 col-lg-7">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Población Estudiantil por Carrera</h6>
+                </div>
+                <div class="card-body">
+                    <div class="chart-area" style="height: 320px;">
+                        <canvas id="chartCarreras"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4 col-lg-5">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Nivel de Riesgo Académico</h6>
+                </div>
+                <div class="card-body">
+                    <div class="chart-pie pt-4 pb-2" style="height: 250px;">
+                        <canvas id="chartRiesgo"></canvas>
+                    </div>
+                    <div class="mt-4 text-center small">
+                        <span class="mr-2">
+                            <i class="bi bi-circle-fill text-success"></i> Regular
+                        </span>
+                        <span class="mr-2">
+                            <i class="bi bi-circle-fill text-warning"></i> Medio
+                        </span>
+                        <span class="mr-2">
+                            <i class="bi bi-circle-fill text-danger"></i> Alto
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
-<div class="row mt-4">
-    <div class="col-md-4">
-        <div class="card text-white bg-primary mb-3">
-            <div class="card-header">Alumnos Activos</div>
-            <div class="card-body">
-                <h5 class="card-title">2,450</h5>
-                <p class="card-text">Total inscritos este cuatrimestre.</p>
-            </div>
-        </div>
-    </div>
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <div class="col-md-4">
-        <div class="card text-white bg-success mb-3">
-            <div class="card-header">Promedio General</div>
-            <div class="card-body">
-                <h5 class="card-title">8.7</h5>
-                <p class="card-text">Calificación media de la universidad.</p>
-            </div>
-        </div>
-    </div>
+    <script>// --- GRÁFICA 1: BARRAS (POBLACIÓN) ---
+        var ctxBar = document.getElementById("chartCarreras");
+        var myBarChart = new Chart(ctxBar, {
+            type: 'bar',
+            data: {
+                // ETIQUETAS: Aquí irán los nombres de las carreras (Gestión de Cuentas / Control Escolar)
+                labels: @Html.Raw(Json.Serialize(Model.EtiquetasCarreras)),
+                datasets: [{
+                    label: "Alumnos Inscritos",
+                    backgroundColor: "#4e73df",
+                    hoverBackgroundColor: "#2e59d9",
+                    borderColor: "#4e73df",
+                    // DATOS: Aquí pondremos los números reales que vengan de la BD
+                    data: @Html.Raw(Json.Serialize(Model.ValoresPoblacion)),
+                }],
+            },
+            options: {
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false // Ocultamos leyenda porque ya sabemos que son alumnos
+                    }
+                }
+            }
+        });
 
-    <div class="col-md-4">
-        <div class="card text-white bg-warning mb-3">
-            <div class="card-header">Trámites Pendientes</div>
-            <div class="card-body">
-                <h5 class="card-title">15</h5>
-                <p class="card-text">Solicitudes requieren atención.</p>
-            </div>
-        </div>
-    </div>
-</div>
+        // --- GRÁFICA 2: DONA (RIESGO TUTORÍAS) ---
+        var ctxPie = document.getElementById("chartRiesgo");
+        var myPieChart = new Chart(ctxPie, {
+            type: 'doughnut',
+            data: {
+                labels: ["Regular", "Riesgo Medio", "Riesgo Alto"],
+                datasets: [{
+                    // DATOS: Estos números deben sumar el total de alumnos
+                    data: @Html.Raw(Json.Serialize(Model.ValoresRiesgo)),
+                    backgroundColor: ['#1cc88a', '#f6c23e', '#e74a3b'],
+                    hoverBackgroundColor: ['#17a673', '#dda20a', '#be2617'],
+                    hoverBorderColor: "rgba(234, 236, 244, 1)",
+                }],
+            },
+            options: {
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                cutout: '70%', // Esto hace el agujero de la dona más grande
+            },
+        });</script>
+}
