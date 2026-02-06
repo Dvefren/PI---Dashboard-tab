@@ -1,6 +1,12 @@
-using Dashboards.Services; // <--- Asegúrate de tener este using
+using Microsoft.EntityFrameworkCore;
+using Universidad.Data;             
+using Dashboards.Services;
 
 var builder = WebApplication.CreateBuilder(args); // 1. PRIMERO SE CREA EL BUILDER
+
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(connectionString));
 
 // 2. LUEGO SE AGREGAN LOS SERVICIOS (Aquí va la línea que daba error)
 builder.Services.AddControllersWithViews();

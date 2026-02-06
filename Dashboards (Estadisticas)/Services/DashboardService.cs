@@ -60,10 +60,31 @@ namespace Dashboards.Services
         /// <summary>
         /// Devuelve los datos para la gráfica de Dona (Riesgo).
         /// </summary>
-        public List<int> ObtenerDatosRiesgo()
+        public DashboardTutoriasVM ObtenerDatosTutorias()
         {
-            // Orden: Regular (Verde), Medio (Amarillo), Alto (Rojo)
-            return new List<int> { 85, 10, 5 };
+            // SIMULACIÓN DE LÓGICA DE NEGOCIO (BACKEND)
+            // Aquí es donde en el futuro harás las consultas complejas a SQL.
+
+            var modelo = new DashboardTutoriasVM
+            {
+                // 1. KPIs Generales
+                TotalAlumnos = 2450,
+                AlumnosEnRiesgoAlto = 125, // Esto debería preocupar al Rector
+                EntrevistasPendientes = 45,
+                PorcentajeAsistenciaGlobal = 92.5,
+
+                // 2. Datos para Gráfica de Motivos
+                EtiquetasMotivos = new List<string> { "Reprobación", "Problemas Familiares", "Ansiedad/Estrés", "Económico" },
+                ValoresMotivos = new List<int> { 120, 45, 30, 15 },
+                // Nota: El backend calcula que "Reprobación" es el problema #1
+
+                // 3. Datos para Gráfica de Riesgo por Carrera
+                Carreras = new List<string> { "Mecatrónica", "Sistemas", "Procesos", "Mantenimiento" },
+                AlumnosEnRiesgoPorCarrera = new List<int> { 40, 25, 35, 25 }
+            };
+
+            return modelo;
         }
     }
+
 }

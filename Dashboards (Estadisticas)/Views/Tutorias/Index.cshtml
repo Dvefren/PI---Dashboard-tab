@@ -1,0 +1,149 @@
+﻿@model Dashboards.Models.ViewModels.DashboardTutoriasVM
+
+@{
+    ViewData["Title"] = "Módulo de Tutorías";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4 mt-3">
+        <h1 class="h3 mb-0 text-gray-800">Tutorías y Psicopedagogía</h1>
+        <button class="btn btn-sm btn-danger shadow-sm">
+            <i class="bi bi-exclamation-circle"></i> Generar Alerta de Riesgo
+        </button>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-danger shadow h-100 py-2 border-danger border-3 border-top-0 border-end-0 border-bottom-0">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                                Alumnos en Riesgo Alto
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.AlumnosEnRiesgoAlto</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="bi bi-heart-pulse-fill h2 text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2 border-warning border-3 border-top-0 border-end-0 border-bottom-0">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                Entrevistas Pendientes
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.EntrevistasPendientes</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="bi bi-chat-dots-fill h2 text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2 border-info border-3 border-top-0 border-end-0 border-bottom-0">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                Asistencia Global
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.PorcentajeAsistenciaGlobal%</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="bi bi-calendar-check-fill h2 text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Motivos de Atención (Top Causas)</h6>
+                </div>
+                <div class="card-body">
+                    <div class="chart-area">
+                        <canvas id="chartMotivos"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Riesgo por Carrera</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Carrera</th>
+                                    <th>Alumnos en Riesgo</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (int i = 0; i < Model.Carreras.Count; i++)
+                                {
+                                    <tr>
+                                        <td>@Model.Carreras[i]</td>
+                                        <td class="text-danger font-weight-bold">@Model.AlumnosEnRiesgoPorCarrera[i]</td>
+                                        <td><a href="#" class="btn btn-sm btn-primary">Ver Lista</a></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Gráfica de Barras Horizontales para Motivos
+        var ctx = document.getElementById('chartMotivos').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: @Html.Raw(Json.Serialize(Model.EtiquetasMotivos)),
+                datasets: [{
+                    label: '# de Casos',
+                    data: @Html.Raw(Json.Serialize(Model.ValoresMotivos)),
+                    backgroundColor: [
+                        'rgba(231, 74, 59, 0.7)', // Rojo (Reprobación)
+                        'rgba(246, 194, 62, 0.7)', // Amarillo (Familia)
+                        'rgba(54, 162, 235, 0.7)', // Azul (Salud)
+                        'rgba(28, 200, 138, 0.7)'  // Verde (Económico)
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                indexAxis: 'y', // ESTO HACE QUE LAS BARRAS SEAN HORIZONTALES
+                scales: {
+                    x: { beginAtZero: true }
+                }
+            }
+        });
+    </script>
+}
