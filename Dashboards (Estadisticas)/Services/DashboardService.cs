@@ -85,6 +85,25 @@ namespace Dashboards.Services
 
             return modelo;
         }
-    }
 
+        public DashboardCalificacionesVM ObtenerDatosCalificaciones()
+        {
+            return new DashboardCalificacionesVM
+            {
+                // KPIs
+                PromedioGeneral = 8.4,
+                IndiceAprobacion = 78.5, // %
+                TotalExamenesAplicados = 1250,
+                AlumnosEnExtraordinario = 145,
+
+                // Gráfica 1: Top Materias Reprobadas
+                MateriasDificiles = new List<string> { "Cálculo Integral", "Prog. Orientada a Objetos", "Inglés V", "Base de Datos", "Física" },
+                CantidadReprobados = new List<int> { 85, 60, 45, 40, 30 },
+
+                // Gráfica 2: Cuántos sacaron 10, 9, 8...
+                EtiquetasDistribucion = new List<string> { "Excelencia (10)", "Muy Bien (9)", "Bien (8)", "Regular (7)", "NA (Reprobado)" },
+                ValoresDistribucion = new List<int> { 150, 300, 450, 200, 150 }
+            };
+        }
+    }
 }

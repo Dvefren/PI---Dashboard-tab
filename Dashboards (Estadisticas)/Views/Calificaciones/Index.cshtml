@@ -1,0 +1,151 @@
+﻿@model Dashboards.Models.ViewModels.DashboardCalificacionesVM
+
+@{
+    ViewData["Title"] = "Calidad Académica";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4 mt-3">
+        <h1 class="h3 mb-0 text-gray-800">Indicadores de Aprovechamiento</h1>
+        <button class="btn btn-sm btn-success shadow-sm">
+            <i class="bi bi-file-earmark-excel"></i> Exportar Sábanas
+        </button>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2 border-primary border-3 border-top-0 border-end-0 border-bottom-0">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Promedio General</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.PromedioGeneral</div>
+                        </div>
+                        <div class="col-auto"><i class="bi bi-123 h2 text-gray-300"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2 border-success border-3 border-top-0 border-end-0 border-bottom-0">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">% Aprobación</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.IndiceAprobacion%</div>
+                        </div>
+                        <div class="col-auto"><i class="bi bi-check-circle-fill h2 text-gray-300"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-danger shadow h-100 py-2 border-danger border-3 border-top-0 border-end-0 border-bottom-0">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">En Remedial/Extra</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.AlumnosEnExtraordinario</div>
+                        </div>
+                        <div class="col-auto"><i class="bi bi-x-octagon-fill h2 text-gray-300"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2 border-info border-3 border-top-0 border-end-0 border-bottom-0">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Exámenes Evaluados</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.TotalExamenesAplicados</div>
+                        </div>
+                        <div class="col-auto"><i class="bi bi-pencil-square h2 text-gray-300"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-7">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Top 5: Materias con Mayor Reprobación</h6>
+                </div>
+                <div class="card-body">
+                    <div class="chart-bar">
+                        <canvas id="chartMaterias"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-5">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Distribución de Calificaciones</h6>
+                </div>
+                <div class="card-body">
+                    <div class="chart-pie pt-4 pb-2">
+                        <canvas id="chartDistribucion"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // GRÁFICA 1: BARRAS (Materias)
+        var ctxMat = document.getElementById("chartMaterias");
+        var myBarChart = new Chart(ctxMat, {
+            type: 'bar',
+            data: {
+                labels: @Html.Raw(Json.Serialize(Model.MateriasDificiles)),
+                datasets: [{
+                    label: "Alumnos Reprobados",
+                    backgroundColor: "#e74a3b", // Rojo peligro
+                    hoverBackgroundColor: "#c0392b",
+                    borderColor: "#e74a3b",
+                    data: @Html.Raw(Json.Serialize(Model.CantidadReprobados)),
+                }],
+            },
+            options: {
+                maintainAspectRatio: false,
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+
+        // GRÁFICA 2: POLAR AREA (Distribución)
+        var ctxDist = document.getElementById("chartDistribucion");
+        var myPolarChart = new Chart(ctxDist, {
+            type: 'polarArea', // Tipo de gráfica moderna
+            data: {
+                labels: @Html.Raw(Json.Serialize(Model.EtiquetasDistribucion)),
+                datasets: [{
+                    data: @Html.Raw(Json.Serialize(Model.ValoresDistribucion)),
+                    backgroundColor: [
+                        '#1cc88a', // Verde (10)
+                        '#36b9cc', // Azul cl (9)
+                        '#4e73df', // Azul (8)
+                        '#f6c23e', // Amarillo (7)
+                        '#e74a3b'  // Rojo (Reprobado)
+                    ],
+                }],
+            },
+            options: {
+                maintainAspectRatio: false,
+            }
+        });
+    </script>
+}
