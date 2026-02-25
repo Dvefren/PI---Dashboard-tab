@@ -1,149 +1,230 @@
 ﻿@model Dashboards.Models.ViewModels.DashboardTutoriasVM
 
 @{
-    ViewData["Title"] = "Módulo de Tutorías";
+    ViewData["Title"] = "Tutorías";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container-fluid">
+<div class="container-fluid mt-4">
 
-    <div class="d-sm-flex align-items-center justify-content-between mb-4 mt-3">
-        <h1 class="h3 mb-0 text-gray-800">Tutorías y Psicopedagogía</h1>
-        <button class="btn btn-sm btn-danger shadow-sm">
-            <i class="bi bi-exclamation-circle"></i> Generar Alerta de Riesgo
-        </button>
-    </div>
-
-    <div class="row">
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-danger shadow h-100 py-2 border-danger border-3 border-top-0 border-end-0 border-bottom-0">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
-                                Alumnos en Riesgo Alto
-                            </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.AlumnosEnRiesgoAlto</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="bi bi-heart-pulse-fill h2 text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-warning shadow h-100 py-2 border-warning border-3 border-top-0 border-end-0 border-bottom-0">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                Entrevistas Pendientes
-                            </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.EntrevistasPendientes</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="bi bi-chat-dots-fill h2 text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-info shadow h-100 py-2 border-info border-3 border-top-0 border-end-0 border-bottom-0">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                Asistencia Global
-                            </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.PorcentajeAsistenciaGlobal%</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="bi bi-calendar-check-fill h2 text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div class="mb-4">
+        <h5 class="fw-bold text-secondary mb-3"><i class="bi bi-pie-chart-fill"></i> ESTADÍSTICAS ADICIONALES</h5>
+        <div class="d-flex gap-2 flex-wrap">
+            <button class="btn btn-danger btn-sm px-4 fw-bold rounded-pill shadow-sm">
+                <i class="bi bi-person-dash-fill"></i> Estadísticas de Bajas
+            </button>
+            <button class="btn btn-success btn-sm px-4 fw-bold rounded-pill shadow-sm" style="background-color: #009669; border: none;">
+                <i class="bi bi-file-earmark-text-fill"></i> Estadísticas de PATs
+            </button>
+            <button class="btn btn-warning btn-sm px-4 fw-bold rounded-pill shadow-sm text-dark">
+                <i class="bi bi-exclamation-triangle-fill"></i> Estadísticas de Arrastre
+            </button>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-lg-6">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Motivos de Atención (Top Causas)</h6>
+    <div class="card shadow-sm border-0 mb-4 rounded-3">
+        <div class="card-body bg-white p-4">
+            <h6 class="text-secondary fw-bold mb-4">ESTADÍSTICAS DE MATERIAS EN ARRASTRE</h6>
+
+            <div class="row align-items-center">
+                <div class="col-lg-5 mb-4 mb-lg-0">
+                    <p class="text-muted small fw-bold mb-3">RESUMEN GENERAL</p>
+
+                    <ul class="list-group list-group-flush small">
+                        <li class="list-group-item d-flex justify-content-between align-items-center px-0 border-light">
+                            TOTAL DE MATERIAS EN ARRASTRE:
+                            <span class="badge rounded-pill" style="background-color: #f8d7da; color: #dc3545;">445</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center px-0 border-light">
+                            ALUMNOS CON ARRASTRE:
+                            <span class="badge rounded-pill" style="background-color: #fff3cd; color: #856404;">276</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center px-0 border-light">
+                            FUERA DE TIEMPO:
+                            <span class="badge rounded-pill bg-danger">8</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center px-0 border-light">
+                            CRÍTICOS (<80 DÍAS):
+                            <span class="badge rounded-pill bg-warning text-dark">0</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center px-0 border-light">
+                            MEDIOS (<180 DÍAS):
+                            <span class="badge rounded-pill bg-secondary">29</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center px-0 border-light fw-bold">
+                            EN TIEMPO:
+                            <span class="badge rounded-pill text-white" style="background-color: #009669;">408</span>
+                        </li>
+                    </ul>
                 </div>
-                <div class="card-body">
-                    <div class="chart-area">
-                        <canvas id="chartMotivos"></canvas>
+
+                <div class="col-lg-7">
+                    <div style="height: 250px;">
+                        <canvas id="chartDonaArrastre"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-12 text-center">
+                    <p class="text-muted small fw-bold mb-3">Materias en Arrastre por Carrera</p>
+                    <div style="height: 200px;">
+                        <canvas id="chartBarrasArrastre"></canvas>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="col-lg-6">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Riesgo por Carrera</h6>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered" width="100%" cellspacing="0">
-                            <thead>
-                                <tr>
-                                    <th>Carrera</th>
-                                    <th>Alumnos en Riesgo</th>
-                                    <th>Acción</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @for (int i = 0; i < Model.Carreras.Count; i++)
-                                {
-                                    <tr>
-                                        <td>@Model.Carreras[i]</td>
-                                        <td class="text-danger font-weight-bold">@Model.AlumnosEnRiesgoPorCarrera[i]</td>
-                                        <td><a href="#" class="btn btn-sm btn-primary">Ver Lista</a></td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+    <div class="card shadow-sm border-0 mb-4 rounded-3">
+        <div class="card-body bg-white p-4">
+            <h5 class="text-secondary fw-bold mb-4"><i class="bi bi-people-fill"></i> ESTADÍSTICAS POR GRUPO</h5>
+
+            <div class="table-responsive mt-3">
+                <table id="tablaTutorias" class="table table-hover align-middle" style="width:100%">
+                    <thead class="bg-utt text-white small text-center align-middle">
+                        <tr>
+                            <th>GRUPO</th>
+                            <th>CARRERA</th>
+                            <th>ESPECIALIDAD</th>
+                            <th>TURNO</th>
+                            <th>PERIODO</th>
+                            <th>TOTAL</th>
+                            <th>H</th>
+                            <th>M</th>
+                            <th><i class="bi bi-person-dash"></i> BAJAS</th>
+                            <th>ECONÓMICOS</th>
+                            <th>ACADÉMICOS</th>
+                            <th>PERSONALES</th>
+                        </tr>
+                    </thead>
+                    <tbody class="small text-center">
+                        <tr>
+                            <td class="text-muted">10A</td>
+                            <td>TECNOLOGÍAS DE LA INFORMACIÓN</td>
+                            <td class="text-muted">INGENIERÍA EN DESARROLLO Y GESTIÓN DE SOFTWARE</td>
+                            <td class="text-muted">VESPERTINO</td>
+                            <td class="text-muted">ENERO - ABRIL</td>
+                            <td>28</td>
+                            <td class="text-muted">26</td>
+                            <td class="text-muted">2</td>
+                            <td><span class="badge" style="background-color: #f8d7da; color: #dc3545;">0</span></td>
+                            <td><span class="badge" style="background-color: #f8d7da; color: #dc3545;">0</span></td>
+                            <td><span class="badge" style="background-color: #fff3cd; color: #856404;">0</span></td>
+                            <td><span class="badge" style="background-color: #e2e3e5; color: #383d41;">0</span></td>
+                        </tr>
+                        <tr>
+                            <td class="text-muted">10A</td>
+                            <td>MECATRÓNICA</td>
+                            <td class="text-muted">INGENIERÍA MECATRÓNICA</td>
+                            <td class="text-muted">VESPERTINO</td>
+                            <td class="text-muted">ENERO - ABRIL</td>
+                            <td>18</td>
+                            <td class="text-muted">16</td>
+                            <td class="text-muted">2</td>
+                            <td><span class="badge" style="background-color: #f8d7da; color: #dc3545;">0</span></td>
+                            <td><span class="badge" style="background-color: #f8d7da; color: #dc3545;">3</span></td>
+                            <td><span class="badge" style="background-color: #fff3cd; color: #856404;">3</span></td>
+                            <td><span class="badge" style="background-color: #e2e3e5; color: #383d41;">0</span></td>
+                        </tr>
+                        <tr>
+                            <td class="text-muted">10A</td>
+                            <td>INDUSTRIAL</td>
+                            <td class="text-muted">INGENIERÍA EN PROCESOS Y OPERACIONES</td>
+                            <td class="text-muted">VESPERTINO</td>
+                            <td class="text-muted">ENERO - ABRIL</td>
+                            <td>25</td>
+                            <td class="text-muted">14</td>
+                            <td class="text-muted">11</td>
+                            <td><span class="badge" style="background-color: #f8d7da; color: #dc3545;">0</span></td>
+                            <td><span class="badge" style="background-color: #f8d7da; color: #dc3545;">5</span></td>
+                            <td><span class="badge" style="background-color: #fff3cd; color: #856404;">6</span></td>
+                            <td><span class="badge" style="background-color: #fff3cd; color: #856404;">2</span></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 </div>
 
 @section Scripts {
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        // Gráfica de Barras Horizontales para Motivos
-        var ctx = document.getElementById('chartMotivos').getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: @Html.Raw(Json.Serialize(Model.EtiquetasMotivos)),
-                datasets: [{
-                    label: '# de Casos',
-                    data: @Html.Raw(Json.Serialize(Model.ValoresMotivos)),
-                    backgroundColor: [
-                        'rgba(231, 74, 59, 0.7)', // Rojo (Reprobación)
-                        'rgba(246, 194, 62, 0.7)', // Amarillo (Familia)
-                        'rgba(54, 162, 235, 0.7)', // Azul (Salud)
-                        'rgba(28, 200, 138, 0.7)'  // Verde (Económico)
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                indexAxis: 'y', // ESTO HACE QUE LAS BARRAS SEAN HORIZONTALES
-                scales: {
-                    x: { beginAtZero: true }
+        $(document).ready(function() {
+            // ==========================================
+            // 1. INICIALIZAR LA TABLA MÁGICA (DATATABLES)
+            // ==========================================
+            $('#tablaTutorias').DataTable({
+                // Configurar idioma español
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json',
+                    search: "BUSCAR:",
+                    lengthMenu: "Mostrar _MENU_ registros"
+                },
+                // Acomodo de elementos (Buscador arriba, paginación abajo)
+                dom: '<"row align-items-center mb-3"<"col-md-6"B><"col-md-6 d-flex justify-content-end"f>>rt<"row align-items-center mt-3"<"col-md-6"i><"col-md-6 d-flex justify-content-end"p>>',
+                // Configurar el botón de Excel
+                buttons: [
+                    {
+                        extend: 'excelHtml5',
+                        text: '<i class="bi bi-file-earmark-excel-fill"></i> Exportar a Excel',
+                        className: 'btn btn-utt btn-sm shadow-sm', // Usa nuestra clase verde UTTN
+                        title: 'Estadisticas_Por_Grupo_UTTN'
+                    }
+                ],
+                pageLength: 5, // Cuántas filas mostrar por página
+                ordering: true // Permite ordenar al hacer clic en los encabezados
+            });
+
+            // ==========================================
+            // 2. GRÁFICA DE DONA (ARRASTRE)
+            // ==========================================
+            var ctxDona = document.getElementById("chartDonaArrastre");
+            new Chart(ctxDona, {
+                type: 'doughnut',
+                data: {
+                    labels: ["Fuera de Tiempo", "Crítico", "Medio", "En Tiempo"],
+                    datasets: [{
+                        data: [8, 0, 29, 408],
+                        // Colores exactos de tu foto
+                        backgroundColor: ['#dc3545', '#ffc107', '#0dcaf0', '#009669'],
+                        borderWidth: 2,
+                        borderColor: '#fff'
+                    }],
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    cutout: '65%', // Grosor de la dona
+                    plugins: {
+                        legend: { position: 'top', labels: { boxWidth: 12, font: { size: 10 } } }
+                    }
                 }
-            }
+            });
+
+            // ==========================================
+            // 3. GRÁFICA DE BARRAS MAGENTA
+            // ==========================================
+            var ctxBarras = document.getElementById("chartBarrasArrastre");
+            new Chart(ctxBarras, {
+                type: 'bar',
+                data: {
+                    labels: ["TIC", "MECATRÓNICA", "INDUSTRIAL", "ADMINISTRACIÓN", "MANTENIMIENTO"],
+                    datasets: [{
+                        label: "Materias en Arrastre",
+                        data: [64, 155, 20, 58, 45],
+                        backgroundColor: "#e83e8c", // El rosa/magenta oficial de tu imagen
+                        barPercentage: 0.5 // Hace las barras más delgadas
+                    }],
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true, grid: { borderDash: [2, 4] } },
+                        x: { grid: { display: false } }
+                    }
+                }
+            });
         });
     </script>
 }

@@ -105,5 +105,85 @@ namespace Dashboards.Services
                 ValoresDistribucion = new List<int> { 150, 300, 450, 200, 150 }
             };
         }
+
+        public DashboardMedicoVM ObtenerDatosMedicos()
+        {
+            return new DashboardMedicoVM
+            {
+                // KPIs del mes/día
+                ConsultasHoy = 42,
+                CasosPsicologia = 15,
+                TrasladosEmergencia = 1,
+                MedicamentosEntregados = 120,
+
+                // Gráfica 1: Top Diagnósticos
+                EtiquetasDiagnosticos = new List<string> { "Infección Respiratoria", "Estrés/Ansiedad", "Problemas Gastrointestinales", "Lesiones Leves", "Migraña" },
+                ValoresDiagnosticos = new List<int> { 85, 60, 45, 20, 15 },
+
+                // Gráfica 2: Áreas de atención
+                EtiquetasAreas = new List<string> { "Medicina General", "Psicología", "Nutrición" },
+                ValoresAreas = new List<int> { 120, 45, 10 }
+            };
+        }
+
+        public DashboardInscripcionesVM ObtenerDatosInscripciones()
+        {
+            return new DashboardInscripcionesVM
+            {
+                // KPIs
+                MetaNuevosIngresos = 1500,
+                FichasVendidas = 1850,
+                InscritosReales = 1200,
+                PorcentajeCumplimiento = 80.0, // (1200 de 1500)
+
+                // Embudo de Conversión (Cómo se van perdiendo aspirantes)
+                EtiquetasEmbudo = new List<string> { "Fichas Pagadas", "Presentaron Examen", "Aceptados", "Inscritos (Pagaron)" },
+                ValoresEmbudo = new List<int> { 1850, 1700, 1400, 1200 },
+
+                // Inscritos por carrera
+                EtiquetasCarreras = new List<string> { "Mecatrónica", "Sistemas", "Mantenimiento", "Procesos", "Administración" },
+                ValoresInscritos = new List<int> { 350, 280, 220, 180, 170 }
+            };
+        }
+
+        public DashboardTramitesVM ObtenerDatosTramites()
+        {
+            return new DashboardTramitesVM
+            {
+                // KPIs
+                SolicitudesNuevas = 45,
+                TramitesEnProceso = 112,
+                TiempoRespuestaPromedio = 2.4, // Tardamos 2.4 días en promedio
+                IngresosMensuales = 15450.50, // Pesos por constancias/credenciales
+
+                // Top Trámites
+                EtiquetasTiposTramite = new List<string> { "Constancia de Estudios", "Kardex", "Reposición Credencial", "Certificado Parcial", "Baja Temporal" },
+                ValoresTiposTramite = new List<int> { 150, 85, 40, 15, 10 },
+
+                // Estatus de entrega (Calidad del servicio)
+                EtiquetasEstatus = new List<string> { "A Tiempo", "Por Vencer", "Retrasados" },
+                ValoresEstatus = new List<int> { 80, 20, 12 }
+            };
+        }
+        public DashboardVinculacionVM ObtenerDatosVinculacion()
+        {
+            return new DashboardVinculacionVM
+            {
+                // KPIs
+                AlumnosEnEstadias = 340,
+                AlumnosEnServicio = 415,
+                EmpresasConvenio = 85,
+                PorcentajeContratacion = 68.5, // 68.5% se quedan a trabajar
+
+                // Top Empresas Receptoras (Usamos nombres genéricos de la industria local)
+                EtiquetasEmpresas = new List<string> { "Parque Industrial Norte", "Maquiladora Ensambles", "Desarrollo de Software Local", "Gobierno Municipal", "Logística y Aduanas" },
+                ValoresAlumnosPorEmpresa = new List<int> { 85, 60, 45, 30, 25 },
+
+                // Distribución por Modalidad
+                EtiquetasModalidad = new List<string> { "Estadías Profesionales", "Servicio Social", "Modelo DUAL" },
+                ValoresModalidad = new List<int> { 340, 415, 65 }
+            };
+        }
+
     }
 }
